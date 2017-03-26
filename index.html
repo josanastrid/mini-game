@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <title>Mini Game</title>
+</head>
+
+<body>
+    <div id="app">
+        <main>
+            <div class="controls">
+                <div style="text-align: center">
+                    <p>{{ currentTime.hour | lpadTime }}: {{ currentTime.minute | lpadTime }}: {{ currentTime.seconds | lpadTime
+                        }}
+                    </p>
+                    <p>Start flipping card to start the game</p>
+                    <div style="margin: 0 auto; text-align: center">
+                        <button v-on:click="stopGame()" v-bind:disabled="!timerId">Stop</button>
+                        <button v-on:click="restartGame()">Restart</button>
+                    </div>
+                </div>
+            </div>
+
+            <section class="cards">
+                <div class="card" v-for="item in cards" v-bind:class="{ flipped: isFlippedCard(item.id) || isCompletedCard(item.id) }" 
+                    v-on:click="!isFlippedCard(item.id) && !isCompletedCard(item.id) && flipCard(item)">
+                    <div class="front">
+                        <img v-bind:src="imgCover" alt="cover" width="180px" height="180px">
+                    </div>
+                    <div class="back">
+                        <img v-bind:src="item.img" alt="cover" width="180px" height="180px">
+                        <!--<span>{{ item.img }}</span>-->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div class="overlay-container" v-if="isGameCompleted">
+            <div class="message">
+                Congratulation, you've completed the game in {{ currentTime.hour | lpadTime }}: {{ currentTime.minute | lpadTime }}: {{ currentTime.seconds
+                | lpadTime }}!
+                <button v-on:click="restartGame()">Play again!</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="app.js" async></script>
+</body>
+
+</html>
