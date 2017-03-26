@@ -13,7 +13,7 @@
   "scripts": {
     "start": "live-server src/.",
     "prebuild": "rimraf dist",
-    "build": "cpx 'src/**/*.{jpg,js,html,css}' dist",
+    "build": "cpx 'src/**/*.{jpg,js,html,css,json}' dist",
     "predeploy": "npm run build",
     "deploy": "firebase deploy"
   },
