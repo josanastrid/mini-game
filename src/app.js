@@ -89,7 +89,7 @@ var app = new Vue({
                 this.completeCards(this.flippedCards);
 
                 if (this.isGameCompleted) {
-                    this.stopGame();
+                    this.timer = clearInterval(this.timer);
                 }
             }
 
@@ -105,7 +105,9 @@ var app = new Vue({
         isMatch(images) {
             if (!(images && images[0])) return;
 
-            var isMatched = _.every(images, images[0]);
+            var isMatched = _.every(images, function (image) {
+                return image === images[0];
+            });
 
             return isMatched;
         },
@@ -122,10 +124,10 @@ var app = new Vue({
         },
         // when click reset, reset timer and shuffle cards
         resetGame: function () {
-            this.card = this.shuffleCards();
+            this.cards = this.shuffleCards();
             this.totalSeconds = 0;
-            this.currentTime = { hour: 0, minute: 0, seconds: 0 };
-            this.stopGame();
+            this.timer = clearInterval(this.timer);
+            this.currentTime = { hour: 0, minute: 0, second: 0 };
         },
         // when click on any card first time, start the game timer 
         startGame() {
