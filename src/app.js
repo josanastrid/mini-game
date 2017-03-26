@@ -1,47 +1,23 @@
-var imgBase = 'assets/images/starwars/%img.jpg';
-
-var shuffle = function (a, b) {
-    return a.length == 0 ? b : function (c) {
-        return shuffle(a, (b || []).concat(c));
-    }(a.splice(Math.floor(Math.random() * a.length), 1));
-}
-
-var maxFlipped = 2;
-
-var getCards = function () {
-    var ids = ['a', 'b', 'c', 'd', 'e', 'f'];
-    var cards = _.concat([], ids, ids);
-    var list = _.map(cards, function(card, key) {
-        return { 
-            id: key, 
-            coverImg: imgBase.replace('%img', 'cover'),
-            img: imgBase.replace('%img', 'card-' + card), 
-            isCompleted: false, 
-            isFlipped: false 
-        };
-    })
-
-    return _.shuffle(list);
-};
-
 var app = new Vue({
     el: '#app',
     data: {
-        cards: getCards(),
-        // flippedCards: [],
-        // completedCards: [],
-        timerId: 0,
+        cards: [],
+        timer: 0,
         totalSeconds: 0,
         currentTime: { hour: 0, minute: 0, seconds: 0 }
     },
+    created: function () {
+        this.cards = this.getCards();
+    },
     computed: {
         isReachMaxFlippedCard: function () {
+            var maxFlipped = 2;
             var totalFlipped = this.flippedCards.length;
             return totalFlipped >= maxFlipped;
         },
 
         flippedCards: function () {
-            var cards = _.filter(this.cards, function (card) { 
+            var cards = _.filter(this.cards, function (card) {
                 return card.isFlipped === true;
             });
 
@@ -49,7 +25,7 @@ var app = new Vue({
         },
 
         isGameCompleted: function () {
-            var totalCompleted = _.filter(this.cards, function (card) { 
+            var totalCompleted = _.filter(this.cards, function (card) {
                 return card.isCompleted === true;
             }).length;
 
@@ -66,13 +42,29 @@ var app = new Vue({
         }
     },
     methods: {
+        getCards: function () {
+            var ids = ['a', 'b', 'c', 'd', 'e', 'f'];
+            var cards = _.concat([], ids, ids);
+            var imgBaseUrl = 'assets/images/starwars/%img.jpg';
+            var list = _.map(cards, function (card, key) {
+                return {
+                    id: key,
+                    coverImg: imgBaseUrl.replace('%img', 'cover'),
+                    img: imgBaseUrl.replace('%img', 'card-' + card),
+                    isCompleted: false,
+                    isFlipped: false
+                };
+            })
+
+            return _.shuffle(list);
+        },
         flipCard: function (card) {
             if (this.isReachMaxFlippedCard) return;
             if (card.isCompleted) return;
-            if(card.isFlipped) return;
+            if (card.isFlipped) return;
 
             // once clicked, game started
-            if (!this.timerId) {
+            if (!this.timer) {
                 this.startGame();
             }
 
@@ -93,7 +85,7 @@ var app = new Vue({
 
                 setTimeout(function () {
                     // reset all card to no flipped
-                    this.cards.forEach(function(card) {
+                    this.cards.forEach(function (card) {
                         card.isFlipped = false;
                     })
                 }.bind(this), 400);
@@ -101,14 +93,14 @@ var app = new Vue({
         },
 
         completeCards(cards) {
-            cards.forEach(function(card) {
+            cards.forEach(function (card) {
                 card.isFlipped = false;
                 card.isCompleted = true;
             });
         },
 
         reshuffle: function () {
-            this.cards = getCards();
+            this.cards = this.getCards();
         },
 
         restartGame: function () {
@@ -124,7 +116,7 @@ var app = new Vue({
             return isMatched;
         },
 
-        timer: function timer() {
+        updateTime: function () {
             ++this.totalSeconds;
 
             var oneSecond = 1;
@@ -158,11 +150,11 @@ var app = new Vue({
 
         startGame() {
             this.totalSeconds = 0;
-            this.timerId = setInterval(this.timer, 1000);
+            this.timer = setInterval(this.updateTime, 1000);
         },
 
         stopGame() {
-            this.timerId = clearInterval(this.timerId);
+            this.timer = clearInterval(this.timer);
         }
     }
 })
