@@ -17,7 +17,7 @@
         <div class="top-bar">
             <div class="left">FLIP & MATCH</div>
             <div class="right">
-                <button v-on:click="restartGame()">RESET</button>
+                <button v-on:click="resetGame()">RESET</button>
             </div>
         </div>
         <div class="top-message">
@@ -25,7 +25,7 @@
                 Flip any card to start.
             </p>
             <p>
-                {{ currentTime.hour | lpadTime }}: {{ currentTime.minute | lpadTime }}: {{ currentTime.seconds | lpadTime }}
+                {{ currentTime.hour | lpadTime }}: {{ currentTime.minute | lpadTime }}: {{ currentTime.second | lpadTime }}
             </p>
         </div>
         <!-- card -->
@@ -49,7 +49,7 @@
                 <p>
                     {{ currentTime.hour | lpadTime }}: 
                     {{ currentTime.minute | lpadTime }}: 
-                    {{ currentTime.seconds | lpadTime }}
+                    {{ currentTime.second | lpadTime }}
                 </p>
                 <p>
                     <button v-on:click="restartGame()">Play again!</button>

@@ -1,14 +1,18 @@
 var app = new Vue({
+    // mounted to <div id="app">
     el: '#app',
+    // all data we need in UI
     data: {
         cards: [],
         timer: 0,
         totalSeconds: 0,
-        currentTime: { hour: 0, minute: 0, seconds: 0 }
+        currentTime: { hour: 0, minute: 0, second: 0 }
     },
+    // lifecycle, when component created
     created: function () {
         this.cards = this.getCards();
     },
+    // all data for compute purpose only, no logic
     computed: {
         isReachMaxFlippedCard: function () {
             var maxFlipped = 2;
@@ -30,10 +34,10 @@ var app = new Vue({
             }).length;
 
             var isCompleted = this.cards.length === totalCompleted;
-            if (isCompleted) this.stopGame();
             return isCompleted;
         }
     },
+    // function to format display data in ui, same as angularjs filter
     filters: {
         lpadTime: function (value) {
             var format = '00';
@@ -41,7 +45,9 @@ var app = new Vue({
             return text.slice(-format.length)
         }
     },
+    // all the functions
     methods: {
+        // get deck of cards
         getCards: function () {
             var ids = ['a', 'b', 'c', 'd', 'e', 'f'];
             var cards = _.concat([], ids, ids);
@@ -58,6 +64,7 @@ var app = new Vue({
 
             return _.shuffle(list);
         },
+        // flip the card
         flipCard: function (card) {
             if (this.isReachMaxFlippedCard) return;
             if (card.isCompleted) return;
@@ -91,31 +98,36 @@ var app = new Vue({
                 }.bind(this), 400);
             }
         },
+        // check if cards match
+        isMatch(no1, no2) {
+            var isMatched = no1 === no2;
 
+            return isMatched;
+        },
+        // if cards match, set the card as complete
         completeCards(cards) {
             cards.forEach(function (card) {
                 card.isFlipped = false;
                 card.isCompleted = true;
             });
         },
-
+        // shuffle the cards 
         reshuffle: function () {
             this.cards = this.getCards();
         },
-
-        restartGame: function () {
+        // when click reset, reset timer and shuffle cards
+        resetGame: function () {
             this.reshuffle();
             this.totalSeconds = 0;
             this.currentTime = { hour: 0, minute: 0, seconds: 0 };
             this.stopGame();
         },
-
-        isMatch(no1, no2) {
-            var isMatched = no1 === no2;
-
-            return isMatched;
+        // when click on any card first time, start the game timer 
+        startGame() {
+            this.totalSeconds = 0;
+            this.timer = setInterval(this.updateTime, 1000);
         },
-
+        // update the time every second
         updateTime: function () {
             ++this.totalSeconds;
 
@@ -141,20 +153,11 @@ var app = new Vue({
             //        = 3800 - (hour * secondsInHour) - (minute * secondsInMinute)
             //        = 20 minutes
 
-            var hour = Math.floor(this.totalSeconds / secondsInHour);
-            var minute = Math.floor(this.totalSeconds / secondsInMinute) - (hour * minutesInHour);
-            var seconds = this.totalSeconds - (hour * secondsInHour + minute * secondsInMinute);
+            var hours = Math.floor(this.totalSeconds / secondsInHour);
+            var minutes = Math.floor(this.totalSeconds / secondsInMinute) - (hours * minutesInHour);
+            var seconds = this.totalSeconds - (hours * secondsInHour + minutes * secondsInMinute);
 
-            this.currentTime = { hour: hour, minute: minute, seconds: seconds };
-        },
-
-        startGame() {
-            this.totalSeconds = 0;
-            this.timer = setInterval(this.updateTime, 1000);
-        },
-
-        stopGame() {
-            this.timer = clearInterval(this.timer);
+            this.currentTime = { hour: hours, minute: minutes, second: seconds };
         }
     }
 })
