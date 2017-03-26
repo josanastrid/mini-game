@@ -71,6 +71,38 @@
   padding: 5px;
 }
 
+/* pop-up-modal */
+.pop-up-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pop-up-modal .message {
+  border: 5px dashed white;
+  background: black;
+  color: white;
+  text-align: center;
+  padding: 30px;
+  margin: 10px;
+}
+
+.pop-up-modal .message p {
+  padding: 5px;
+}
+
+.pop-up-modal button {
+  background: white;
+  border: none;
+  padding: 5px 20px;
+}
+
 /* small device styles, smaller than ipad */
 @media (max-width: 768px) {
   .card {

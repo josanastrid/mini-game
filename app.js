@@ -1,4 +1,4 @@
-var imgBase = 'assets/starwars/%img.jpg';
+var imgBase = 'assets/images/starwars/%img.jpg';
 
 var shuffle = function (a, b) {
     return a.length == 0 ? b : function (c) {
