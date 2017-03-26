@@ -1,26 +1,26 @@
 importScripts('serviceworker-cache-polyfill.js');
 
-var CACHE_NAME = 'simple-pwa-v2';
+var CACHE_NAME = 'mini-card-game';
 
 // File want to cache
 var urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json',
-  './serviceworker-cache-polyfill.js',
-  './assets/images/icon-48.png',
-  './assets/images/icon-96.png',
-  './assets/images/icon-144.png',
-  './assets/images/starwars/card-a.jpg',
-  './assets/images/starwars/card-b.jpg',
-  './assets/images/starwars/card-c.jpg',
-  './assets/images/starwars/card-d.jpg',
-  './assets/images/starwars/card-e.jpg',
-  './assets/images/starwars/card-f.jpg',
-  './assets/images/starwars/cover.jpg',
-  './assets/vendor/reset.min.css',
-  './assets/vendor/lodash.min.js',
-  './assets/vendor/vue.min.js',
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/serviceworker-cache-polyfill.js',
+  '/assets/images/icon-48.png',
+  '/assets/images/icon-96.png',
+  '/assets/images/icon-144.png',
+  '/assets/images/starwars/card-a.jpg',
+  '/assets/images/starwars/card-b.jpg',
+  '/assets/images/starwars/card-c.jpg',
+  '/assets/images/starwars/card-d.jpg',
+  '/assets/images/starwars/card-e.jpg',
+  '/assets/images/starwars/card-f.jpg',
+  '/assets/images/starwars/cover.jpg',
+  '/assets/vendor/reset.min.css',
+  '/assets/vendor/lodash.min.js',
+  '/assets/vendor/vue.min.js',
 ];
 
 
@@ -99,7 +99,7 @@ self.onactivate = function (e) {
 
   console.log('[serviceWorker]: Actived');
 
-  var whiteList = [];
+  var whiteList = ['mini-card-game'];
 
   e.waitUntil(
     caches.keys().then(function (cacheNames) {
