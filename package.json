@@ -4,9 +4,18 @@
   "description": "mini card game",
   "main": "app.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "cpx": "1.5.0",
+    "firebase-tools": "3.5.0",
+    "live-server": "1.2.0",
+    "rimraf": "2.6.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "live-server .",
+    "prebuild": "rimraf dist",
+    "build": "cpx 'src/**/*.{jpg,js,html,css}' dist",
+    "predeploy": "npm run build",
+    "deploy": "firebase deploy"
   },
   "author": "",
   "license": "ISC"

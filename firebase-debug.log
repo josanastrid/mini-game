@@ -1,0 +1,22 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /Users/jecelyn/.nvm/versions/node/v7.7.0/bin/node /Users/jecelyn/Projects/mini-game/node_modules/.bin/firebase deploy
+[debug] CLI Version:  3.5.0
+[debug] Platform:     darwin
+[debug] Node Version: v7.7.0
+[debug] Time:         Sun Mar 26 2017 22:17:02 GMT+0800 (MYT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/mini-game-8d791  
+ Sun Mar 26 2017 22:17:02 GMT+0800 (MYT)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/mini-game-8d791/tokens  
+ Sun Mar 26 2017 22:17:05 GMT+0800 (MYT)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'mini-game-8d791'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist directory for upload...
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/mini-game-8d791/uploads/-Kg9y_N_Fi3jlUqtrCwa?fileCount=137&message=  
+ Sun Mar 26 2017 22:17:12 GMT+0800 (MYT)
