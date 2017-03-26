@@ -12,7 +12,13 @@ var getCards = function () {
     var ids = ['a', 'b', 'c', 'd', 'e', 'f'];
     var cards = _.concat([], ids, ids);
     var list = _.map(cards, function(card, key) {
-        return { id: key, img: imgBase.replace('%img', 'card-' + card), isCompleted: false, isFlipped: false }
+        return { 
+            id: key, 
+            coverImg: imgBase.replace('%img', 'cover'),
+            img: imgBase.replace('%img', 'card-' + card), 
+            isCompleted: false, 
+            isFlipped: false 
+        };
     })
 
     return _.shuffle(list);
@@ -21,7 +27,6 @@ var getCards = function () {
 var app = new Vue({
     el: '#app',
     data: {
-        imgCover: imgBase.replace('%img', 'cover'),
         cards: getCards(),
         // flippedCards: [],
         // completedCards: [],
@@ -80,6 +85,10 @@ var app = new Vue({
 
                 if (this.isMatch(cardNo1, cardNo2)) {
                     this.completeCards(this.flippedCards);
+
+                    if (this.isGameCompleted) {
+                        this.stopGame();
+                    }
                 }
 
                 setTimeout(function () {
@@ -139,11 +148,6 @@ var app = new Vue({
             //        = 3800 - (hour * 60 minutes * 60 seconds) - (minute * 60 seconds)
             //        = 3800 - (hour * secondsInHour) - (minute * secondsInMinute)
             //        = 20 minutes
-            
-
-            // var hour = Math.floor(this.totalSeconds / 3600);
-            // var minute = Math.floor((this.totalSeconds - hour * 3600) / 60);
-            // var seconds = this.totalSeconds - (hour * 3600 + minute * 60);
 
             var hour = Math.floor(this.totalSeconds / secondsInHour);
             var minute = Math.floor(this.totalSeconds / secondsInMinute) - (hour * minutesInHour);
