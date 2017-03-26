@@ -27,8 +27,8 @@
             </div>
 
             <section class="cards">
-                <div class="card" v-for="item in cards" v-bind:class="{ flipped: item.isFlipped || item.isCompleted }" 
-                    v-on:click="flipCard(item)">
+                <div class="card" v-for="item in cards" v-bind:class="{ flipped: isFlippedCard(item.id) || isCompletedCard(item.id) }" 
+                    v-on:click="!isFlippedCard(item.id) && !isCompletedCard(item.id) && flipCard(item)">
                     <div class="front">
                         <img v-bind:src="imgCover" alt="cover" width="180px" height="180px">
                     </div>
