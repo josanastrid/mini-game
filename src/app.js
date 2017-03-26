@@ -10,7 +10,7 @@ var app = new Vue({
     },
     // lifecycle, when component created
     created: function () {
-        this.cards = this.getCards();
+        this.cards = this.shuffleCards();
     },
     // all data for compute purpose only, no logic
     computed: {
@@ -48,7 +48,7 @@ var app = new Vue({
     // all the functions
     methods: {
         // get deck of cards
-        getCards: function () {
+        shuffleCards: function () {
             var ids = ['a', 'b', 'c', 'd', 'e', 'f'];
             var cards = _.concat([], ids, ids);
             var imgBaseUrl = 'assets/images/starwars/%img.jpg';
@@ -66,41 +66,46 @@ var app = new Vue({
         },
         // flip the card
         flipCard: function (card) {
+            // cannot flip card under these condition
             if (this.isReachMaxFlippedCard) return;
             if (card.isCompleted) return;
             if (card.isFlipped) return;
 
-            // once clicked, game started
+            // if it's first time flip card, game started
             if (!this.timer) {
                 this.startGame();
             }
 
+            // flip the card
             card.isFlipped = true;
 
-            if (this.isReachMaxFlippedCard) {
+            // end here if not hit max
+            if (!this.isReachMaxFlippedCard) return;
 
-                var cardNo1 = this.flippedCards[0].img;
-                var cardNo2 = this.flippedCards[1].img;
+            // get list of flipped card images
+            var images = _.map(this.flippedCards, 'img');
 
-                if (this.isMatch(cardNo1, cardNo2)) {
-                    this.completeCards(this.flippedCards);
+            if (this.isMatch(images)) {
+                this.completeCards(this.flippedCards);
 
-                    if (this.isGameCompleted) {
-                        this.stopGame();
-                    }
+                if (this.isGameCompleted) {
+                    this.stopGame();
                 }
-
-                setTimeout(function () {
-                    // reset all card to no flipped
-                    this.cards.forEach(function (card) {
-                        card.isFlipped = false;
-                    })
-                }.bind(this), 400);
             }
+
+            // close all cards after 400 miliseconds
+            setTimeout(function () {
+                // reset all card to no flipped
+                this.cards.forEach(function (card) {
+                    card.isFlipped = false;
+                })
+            }.bind(this), 400);
         },
         // check if cards match
-        isMatch(no1, no2) {
-            var isMatched = no1 === no2;
+        isMatch(images) {
+            if (!(images && images[0])) return;
+
+            var isMatched = _.every(images, images[0]);
 
             return isMatched;
         },
@@ -113,11 +118,11 @@ var app = new Vue({
         },
         // shuffle the cards 
         reshuffle: function () {
-            this.cards = this.getCards();
+            this.cards = this.shuffleCards();
         },
         // when click reset, reset timer and shuffle cards
         resetGame: function () {
-            this.reshuffle();
+            this.card = this.shuffleCards();
             this.totalSeconds = 0;
             this.currentTime = { hour: 0, minute: 0, seconds: 0 };
             this.stopGame();
