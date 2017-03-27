@@ -3,20 +3,20 @@
     "short_name": "Mini Card",
     "icons": [
         {
-            "src": "assets/images/icon-48.png",
+            "src": "./assets/images/icon-48.png",
             "sizes": "48x48",
             "type": "image/png"
         },
         {
-            "src": "assets/images/icon-96.png",
+            "src": "./assets/images/icon-96.png",
             "sizes": "96x96",
             "type": "image/png"
         },
         {
-            "src": "assets/images/icon-144.png",
+            "src": "./assets/images/icon-144.png",
             "sizes": "144x144",
             "type": "image/png"
-        },
+        }
     ],
     "start_url": "index.html",
     "display": "standalone",
