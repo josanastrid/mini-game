@@ -51,7 +51,7 @@ var app = new Vue({
         shuffleCards: function () {
             var ids = ['a', 'b', 'c', 'd', 'e', 'f'];
             var cards = _.concat([], ids, ids);
-            var imgBaseUrl = 'assets/images/starwars/%img.jpg';
+            var imgBaseUrl = 'assets/images/beauty-movie-2/%img.jpg';
             var list = _.map(cards, function (card, key) {
                 return {
                     id: key,
