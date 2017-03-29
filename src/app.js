@@ -3,6 +3,7 @@ var app = new Vue({
     el: '#app',
     // all data we need in UI
     data: {
+        topMessage: 'Flip any card to start.',
         cards: [],
         timer: 0,
         totalSeconds: 0,
@@ -102,7 +103,7 @@ var app = new Vue({
             }.bind(this), 400);
         },
         // check if cards match
-        isMatch(images) {
+        isMatch: function (images) {
             if (!(images && images[0])) return;
 
             var isMatched = _.every(images, function (image) {
@@ -112,7 +113,7 @@ var app = new Vue({
             return isMatched;
         },
         // if cards match, set the card as complete
-        completeCards(cards) {
+        completeCards: function (cards) {
             cards.forEach(function (card) {
                 card.isFlipped = false;
                 card.isCompleted = true;
@@ -130,7 +131,7 @@ var app = new Vue({
             this.currentTime = { hour: 0, minute: 0, second: 0 };
         },
         // when click on any card first time, start the game timer 
-        startGame() {
+        startGame: function () {
             this.totalSeconds = 0;
             this.timer = setInterval(this.updateTime, 1000);
         },
