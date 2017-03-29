@@ -147,19 +147,22 @@ var app = new Vue({
 
             // 3800 seconds equal to how many hour: minute: seconds?
 
-            // hour = 3800 / (60 minutes * 60 seconds)
+            // convert all unit to hour first, to start calculation
+            // hour = 3800 / (60 minutes * 60 seconds) // convert all to hour
             //      = 3800 / secondsInHour , u need to round down, so
             //      = round down(3800 / secondsInHour)
             //      = so it's 1 hour
 
+            // convert all unit to minute first, to start calculation
             // minute = round down(3800 / 60 seconds) - (hour * 60 minutes)
-            //        = round down(3800 / secondsInMinute) - (hour * minutesInHour)
+            //        = round down(3800 / secondsInMinute) - (hour * minutesInHour) // convert all to minute
             //        = so it's 3 minutes
 
+            // convert all unit to second first, to start calculation
             // second = 3800 - total hours - total minutes
-            //        = 3800 - (hour * 60 minutes * 60 seconds) - (minute * 60 seconds)
+            //        = 3800 - (hour * 60 minutes * 60 seconds) - (minute * 60 seconds) // convert all to second
             //        = 3800 - (hour * secondsInHour) - (minute * secondsInMinute)
-            //        = 20 minutes
+            //        = 20 seconds
 
             var hours = Math.floor(this.totalSeconds / secondsInHour);
             var minutes = Math.floor(this.totalSeconds / secondsInMinute) - (hours * minutesInHour);
