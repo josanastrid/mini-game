@@ -1,3 +1,4 @@
+// For Progressive Web App-
 importScripts('serviceworker-cache-polyfill.js');
 
 var CACHE_NAME = 'mini-card-game';
